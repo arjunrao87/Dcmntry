@@ -6,16 +6,16 @@ class HeaderBar extends Component{
 	constructor( props ){
 		super( props );
 		this.state = {
-			gifs: []
+			videos: []
 		}
 		this.handleTermChange = this.handleTermChange.bind( this );
 		console.log( "Initializing HeaderBar" );
 	}
 
   handleTermChange(term) {
-    const url = `http://api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=dc6zaTOxFJmzC`;
+    const url = `http://api.giphy.com/v1/videos/search?q=${term.replace(/\s/g, '+')}&api_key=dc6zaTOxFJmzC`;
     request.get(url, (err, res) => {
-      this.setState({ gifs: res.body.data })
+      this.setState({ videos: res.body.data })
     });
   }
 

@@ -1,17 +1,17 @@
 import React from 'react';
 import '../css/App.css';
 import SearchBar from './SearchBar';
-import GifList from './GifList';
+import VideoList from './VideoList';
 import request from 'superagent';
-import GifModal from './GifModal';
+import VideoModal from './VideoModal';
 
 class App extends React.Component {
 
   constructor( props ){
     super( props );
     this.state = {
-      gifs: [],
-      selectedGif: null,
+      videos: [],
+      selectedVideo: null,
       modalIsOpen: false
     }
     this.handleTermChange = this.handleTermChange.bind( this );
@@ -20,22 +20,22 @@ class App extends React.Component {
   handleTermChange(term) {
     const url = `http://api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=dc6zaTOxFJmzC`;
     request.get(url, (err, res) => {
-      this.setState({ gifs: res.body.data })
+      this.setState({ videos: res.body.data })
     });
   }
 
 
-  openModal(gif) {
+  openModal(video) {
     this.setState({
       modalIsOpen: true,
-      selectedGif: gif
+      selectedVideo: video
     });
   }
 
   closeModal() {
     this.setState({
       modalIsOpen: false,
-      selectedGif: null
+      selectedVideo: null
     });
   }
 
@@ -44,9 +44,9 @@ class App extends React.Component {
         <div>
           <div id="logo">Dcmntry</div>
           <SearchBar onTermChange={this.handleTermChange} />
-           <GifList gifs={this.state.gifs} onGifSelect={selectedGif => this.openModal(selectedGif) } />
-           <GifModal modalIsOpen={this.state.modalIsOpen}
-                    selectedGif={this.state.selectedGif}
+           <VideoList videos={this.state.videos} onVideoSelect={selectedVideo => this.openModal(selectedVideo) } />
+           <VideoModal modalIsOpen={this.state.modalIsOpen}
+                    selectedVideo={this.state.selectedVideo}
                     onRequestClose={ () => this.closeModal() } />
         </div>
     );
